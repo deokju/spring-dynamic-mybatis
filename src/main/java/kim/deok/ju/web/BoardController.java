@@ -15,6 +15,12 @@ public class BoardController {
 
   @GetMapping("list")
   public String getList(Model model) throws  Exception{
-    return "board/list";
+    return "board/list2";
+  }
+
+  @GetMapping("list2")
+  public String getList2(Model model) throws  Exception{
+
+    return "board/list2";
   }
 }
