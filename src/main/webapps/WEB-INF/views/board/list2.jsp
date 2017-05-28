@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <title>W3.CSS Template</title>
@@ -12,43 +14,48 @@
 </style>
 <body>
 
-<!-- 왼쪽 메뉴 -->
-<nav class="w3-sidebar w3-bar-block w3-collapse w3-white w3-animate-left w3-card-2" style="z-index:3;width:320px;" id="mySidebar">
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom w3-large">Dynamic-mybatis</a>
-    <a href="javascript:void(0)" onclick="w3_close()" title="Close Sidemenu" class="w3-bar-item w3-button w3-hide-large w3-large">Close <i class="fa fa-remove"></i></a>
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align" onclick="document.getElementById('id01').style.display='block'">New Message <i class="w3-padding fa fa-pencil"></i></a>
-    <a id="myBtn" onclick="myFunc('Demo1')" href="javascript:void(0)" class="w3-bar-item w3-button"><i class="fa fa-inbox w3-margin-right"></i>Inbox (3)<i class="fa fa-caret-down w3-margin-left"></i></a>
-    <div id="Demo1" class="w3-hide w3-animate-left">
-        <a href="javascript:void(0)"  id="firstTab" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openMail('Borge');w3_close();">
-            <div class="w3-container">
-                <img class="w3-round w3-margin-right" src="/resources/kakao/muzi.jpg" style="width:15%;">
-                <span class="w3-opacity w3-large">Kim DeokJu</span>
-                <h6>제목: 배가 고파요</h6>
-                <p>아놔 형 뭘 이런걸 시키고 그래</p>
-            </div>
+    <!-- 왼쪽 메뉴 -->
+    <nav class="w3-sidebar w3-bar-block w3-collapse w3-white w3-animate-left w3-card-2" style="z-index:3;width:320px;" id="mySidebar">
+
+        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom w3-large">
+            Dynamic-mybatis<br/>
+            ${Auth.userName}님 어서오세요.
         </a>
-    </div>
+        <a href="javascript:void(0)" onclick="w3_close()" title="Close Sidemenu" class="w3-bar-item w3-button w3-hide-large w3-large">Close <i class="fa fa-remove"></i></a>
+        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align" onclick="document.getElementById('id01').style.display='block'">New Message <i class="w3-padding fa fa-pencil"></i></a>
+        <a id="myBtn" onclick="myFunc('Demo1')" href="javascript:void(0)" class="w3-bar-item w3-button"><i class="fa fa-inbox w3-margin-right"></i>Inbox (3)<i class="fa fa-caret-down w3-margin-left"></i></a>
+        <!-- side 메뉴 리스트 -->
+        <div id="Demo1" class="w3-hide w3-animate-left">
+            <c:forEach var="message" items="${messages}">
+                <a href="javascript:void(0)"  id="firstTab" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openMail('Borge');w3_close();">
+                    <div class="w3-container">
+                        <img class="w3-round w3-margin-right" src="/resources/kakao/muzi.jpg" style="width:15%;">
+                        <span class="w3-opacity w3-large">${message.sender}</span>
+                        <h6>제목: ${message.title}</h6>
+                        <p>${message.summary}</p>
+                    </div>
+                </a>
+            </c:forEach>
+        </div>
+    </nav>
 
-<%--
-    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-paper-plane w3-margin-right"></i>Sent</a>
-    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-hourglass-end w3-margin-right"></i>Drafts</a>
-    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-trash w3-margin-right"></i>Trash</a>
---%>
-
-</nav>
-
-<!-- Modal that pops up when you click on "New Message" -->
-<div id="id01" class="w3-modal" style="z-index:4">
-    <div class="w3-modal-content w3-animate-zoom">
+    <!--  새로운 메시지 보내기 -->
+    <div id="id01" class="w3-modal" style="z-index:4">
+        <div class="w3-modal-content w3-animate-zoom">
         <div class="w3-container w3-padding w3-red">
-       <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-red w3-right w3-xxlarge"><i class="fa fa-remove"></i></span>
+            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-red w3-right w3-xxlarge"><i class="fa fa-remove"></i></span>
             <h2>메시지 보내기</h2>
         </div>
         <div class="w3-panel">
             <label>보내는사람</label>
-            <input class="w3-input w3-border w3-margin-bottom" type="text">
+            <input type="hidden" id="sender"      name="sender" value="${Auth.id}">
+            <input class="w3-input w3-border w3-margin-bottom" type="text"  readonly ="readonly" value="${Auth.userName}">
             <label>받는사람</label>
-            <input class="w3-input w3-border w3-margin-bottom" type="text">
+            <select id="receiver" name="receiver" class="w3-input w3-border w3-margin-bottom">
+            <c:forEach var="member" items="${members}">
+                <option value="${member.id}">${member.name}</option>
+            </c:forEach>
+            </select>
             <label>저장 DB서버</label>
             <select id="dbNum" name="dbNum" class="w3-input w3-border w3-margin-bottom">
                 <option value="1" selected>1번서버</option>
@@ -56,10 +63,10 @@
             </select>
             <label>제목</label>
             <input class="w3-input w3-border w3-margin-bottom" type="text">
-            <input class="w3-input w3-border w3-margin-bottom" style="height:150px" placeholder="What's on your mind?">
+            <input class="w3-input w3-border w3-margin-bottom" style="height:150px" placeholder="What's on your mind?" id="message" name="message">
             <div class="w3-section">
-                <a class="w3-button w3-red" onclick="document.getElementById('id01').style.display='none'">Cancel  <i class="fa fa-remove"></i></a>
-                <a class="w3-button w3-light-grey w3-right" onclick="document.getElementById('id01').style.display='none'">Send  <i class="fa fa-paper-plane"></i></a>
+                <a class="w3-button w3-red" onclick="document.getElementById('id01').style.display='none'">취소  <i class="fa fa-remove"></i></a>
+                <a class="w3-button w3-light-grey w3-right" onclick="pushMessage();">보내기<i class="fa fa-paper-plane"></i></a>
             </div>
         </div>
     </div>
@@ -78,9 +85,6 @@
         <img class="w3-round  w3-animate-top" src="/resources/kakao/muzi.jpg" style="width:20%;">
         <h5 class="w3-opacity">제목: 배가 고파요</h5>
         <h4><i class="fa fa-clock-o"></i> 보낸이 Kim DeokJu, 2017 05 25.</h4>
-<%--        <a class="w3-button w3-light-grey" href="#">Reply<i class="w3-margin-left fa fa-mail-reply"></i></a>
-        <a class="w3-button w3-light-grey" href="#">Forward<i class="w3-margin-left fa fa-arrow-right"></i></a>
---%>
         <hr>
         <p>Hello, i just wanted to let you know that i'll be home at lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -113,7 +117,8 @@
 
 </div>
 
-<script>
+    <script src="/resources/js/jquery.js"></script>
+    <script>
     var openInbox = document.getElementById("myBtn");
     openInbox.click();
 
@@ -151,6 +156,36 @@
         }
         document.getElementById(personName).style.display = "block";
         event.currentTarget.className += " w3-light-grey";
+    }
+
+    function pushMessage() {
+
+        var sender   = $('#sender').val();
+        var receiver = $('#receiver').val();
+        var dbNum    = $('#dbNum').val();
+        var message = $('#message').val();
+
+        if(!message) {
+            alert('메시지가 작성되지 않았습니다. 김덕주 사랑해라는 메시지로 대신 합니다.');
+        }
+
+        if(message) {
+            message = $.trim(message);
+        }
+
+        $.ajax({
+            url : '/board/message'
+            , type : 'POST'
+            , data : {sender:sender, receiver:receiver, message:message, dbNum:dbNum}
+            , async : false
+            , dataType : 'json'
+            , success : function(data) {
+                console.log(data);
+            }
+            ,error:function(request, status, error){
+                return false;
+            }
+        });
     }
 </script>
 

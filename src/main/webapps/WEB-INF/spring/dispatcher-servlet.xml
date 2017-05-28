@@ -15,11 +15,12 @@
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
 
-    <beans:bean id="authInterceptor" class="kim.deok.ju.LoginInterceptor"/>
+    <beans:bean id="authInterceptor" class="kim.deok.ju.interceptor.LoginInterceptor"/>
 
     <interceptors>
         <interceptor>
-            <mapping path="/*"/>
+            <mapping path="/**"/>
+            <exclude-mapping path="/login/**/"/>
             <beans:ref bean="authInterceptor"/>
         </interceptor>
     </interceptors>
