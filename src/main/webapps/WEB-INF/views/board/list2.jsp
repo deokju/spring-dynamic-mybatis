@@ -175,7 +175,7 @@
             , async : false
             , dataType : 'json'
             , success : function(data) {
-                console.log(data);
+                location.reload();
             }
             ,error:function(request, status, error){
                 return false;

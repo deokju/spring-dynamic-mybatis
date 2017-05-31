@@ -5,6 +5,7 @@ import kim.deok.ju.persistence.MessageDAO;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Service
 public class MessageService {
@@ -14,5 +15,9 @@ public class MessageService {
 
     public void writeMessage(MessageVO messageVO) {
         messageDAO.write(messageVO);
+    }
+
+    public List<MessageVO> getMessages(String id) {
+        return messageDAO.getMessages(id);
     }
 }

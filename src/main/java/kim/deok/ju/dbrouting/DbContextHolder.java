@@ -18,4 +18,17 @@ public class DbContextHolder {
    public static void clearDbType() {
       contextHolder.remove();
    }
+
+   public static void dbchanged(int dbNum) {
+       switch (dbNum){
+           case 1:
+               DbContextHolder.setDbType(DbType.MASTER);
+               break;
+           case 2:
+               DbContextHolder.setDbType(DbType.SLAVE);
+               break;
+           default:
+               DbContextHolder.setDbType(DbType.USERDB);
+       }
+   }
 }

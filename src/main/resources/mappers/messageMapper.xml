@@ -8,6 +8,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		INSERT INTO tb_message(sender, receiver, title, summary, message)
 		VALUES (#{sender}, #{receiver}, #{title}, #{summary}, #{message})
 	</insert>
+
+	<select id="getMessages" parameterType="string">
+        SELECT
+          idx, sender, receiver, title, summary, message
+        FROM
+          tb_message
+        WHERE
+          sender = #{id}
+	</select>
 </mapper>
 
 
