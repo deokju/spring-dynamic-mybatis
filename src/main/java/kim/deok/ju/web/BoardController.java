@@ -27,9 +27,11 @@ public class BoardController {
   @GetMapping("list2")
   public String getList2(Model model, HttpSession session) throws  Exception{
       AuthVO auth = (AuthVO)session.getAttribute("Auth");
-      DbContextHolder.dbchanged(auth.getDbNum());
 
+      DbContextHolder.dbchanged(auth.getDbNum());
       model.addAttribute("messages", messageService.getMessages(auth.getId()));
+
+      DbContextHolder.dbchanged(3);
       model.addAttribute("members",  authService.getMembers());
 
     return "board/list2";

@@ -23,11 +23,11 @@
         </a>
         <a href="javascript:void(0)" onclick="w3_close()" title="Close Sidemenu" class="w3-bar-item w3-button w3-hide-large w3-large">Close <i class="fa fa-remove"></i></a>
         <a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align" onclick="document.getElementById('id01').style.display='block'">New Message <i class="w3-padding fa fa-pencil"></i></a>
-        <a id="myBtn" onclick="myFunc('Demo1')" href="javascript:void(0)" class="w3-bar-item w3-button"><i class="fa fa-inbox w3-margin-right"></i>Inbox (3)<i class="fa fa-caret-down w3-margin-left"></i></a>
+        <a id="myBtn" onclick="myFunc('Demo1')" href="javascript:void(0)" class="w3-bar-item w3-button"><i class="fa fa-inbox w3-margin-right"></i>메시지함 (${messages.size()})<i class="fa fa-caret-down w3-margin-left"></i></a>
         <!-- side 메뉴 리스트 -->
         <div id="Demo1" class="w3-hide w3-animate-left">
-            <c:forEach var="message" items="${messages}">
-                <a href="javascript:void(0)"  id="firstTab" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openMail('Borge');w3_close();">
+            <c:forEach var="message" items="${messages}" varStatus="status">
+                <a href="javascript:void(0)"  id="firstTab" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey" onclick="openMail('message${status.index}');w3_close();">
                     <div class="w3-container">
                         <img class="w3-round w3-margin-right" src="/resources/kakao/muzi.jpg" style="width:15%;">
                         <span class="w3-opacity w3-large">${message.sender}</span>
@@ -75,40 +75,18 @@
     <i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top" onclick="w3_open()"></i>
     <a href="javascript:void(0)" class="w3-hide-large w3-red w3-button w3-right w3-margin-top w3-margin-right" onclick="document.getElementById('id01').style.display='block'"><i class="fa fa-pencil"></i></a>
 
-    <div id="Borge" class="w3-container person">
-        <br>
-        <img class="w3-round  w3-animate-top" src="/resources/kakao/muzi.jpg" style="width:20%;">
-        <h5 class="w3-opacity">제목: 배가 고파요</h5>
-        <h4><i class="fa fa-clock-o"></i> 보낸이 Kim DeokJu, 2017 05 25.</h4>
-        <hr>
-        <p>Hello, i just wanted to let you know that i'll be home at lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <p>Best Regards, <br>Borge Refsnes</p>
-    </div>
+    <c:forEach var="message" items="${messages}" varStatus="status">
+        <div id="message${status.index}" class="w3-container person">
+            <br>
+            <img class="w3-round  w3-animate-top" src="/resources/kakao/muzi.jpg" style="width:20%;">
+            <h5 class="w3-opacity">제목: ${message.title}</h5>
+            <h4><i class="fa fa-clock-o"></i> 보낸이 ${message.sender}, ${message.regDate}</h4>
+            <hr>
+            <p>${message.message}</p>
+        </div>
+    </c:forEach>
 
-    <div id="Jane" class="w3-container person">
-        <br>
-        <img class="w3-round w3-animate-top" src="/w3images/avatar5.png" style="width:20%;">
-        <h5 class="w3-opacity">Subject: None</h5>
-        <h4><i class="fa fa-clock-o"></i> From Jane Doe, Sep 25, 2015.</h4>
-        <a class="w3-button w3-light-grey">Reply<i class="w3-margin-left fa fa-mail-reply"></i></a>
-        <a class="w3-button w3-light-grey">Forward<i class="w3-margin-left fa fa-arrow-right"></i></a>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <p>Forever yours,<br>Jane</p>
-    </div>
 
-    <div id="John" class="w3-container person">
-        <br>
-        <img class="w3-round w3-animate-top" src="/w3images/avatar2.png" style="width:20%;">
-        <h5 class="w3-opacity">Subject: None</h5>
-        <h4><i class="fa fa-clock-o"></i> From John Doe, Sep 23, 2015.</h4>
-        <a class="w3-button w3-light-grey">Reply<i class="w3-margin-left fa fa-mail-reply"></i></a>
-        <a class="w3-button w3-light-grey">Forward<i class="w3-margin-left fa fa-arrow-right"></i></a>
-        <hr>
-        <p>Welcome.</p>
-        <p>That's it!</p>
-    </div>
 
 </div>
 
@@ -173,7 +151,7 @@
             , type : 'POST'
             , data : {sender:sender, receiver:receiver, message:message, title:title}
             , async : false
-            , dataType : 'json'
+            //, dataType : 'json'
             , success : function(data) {
                 location.reload();
             }

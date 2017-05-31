@@ -9,9 +9,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		VALUES (#{sender}, #{receiver}, #{title}, #{summary}, #{message})
 	</insert>
 
-	<select id="getMessages" parameterType="string">
+	<select id="getMessages" parameterType="string" resultType="MessageVO">
         SELECT
-          idx, sender, receiver, title, summary, message
+          idx, sender, receiver, title, summary, message, regDate
         FROM
           tb_message
         WHERE
