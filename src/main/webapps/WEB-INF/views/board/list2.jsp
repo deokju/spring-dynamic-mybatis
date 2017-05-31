@@ -57,7 +57,7 @@
             </c:forEach>
             </select>
             <label>제목</label>
-            <input class="w3-input w3-border w3-margin-bottom" type="text">
+            <input class="w3-input w3-border w3-margin-bottom" type="text" id="title" name="title">
             <input class="w3-input w3-border w3-margin-bottom" style="height:150px" placeholder="What's on your mind?" id="message" name="message">
             <div class="w3-section">
                 <a class="w3-button w3-red" onclick="document.getElementById('id01').style.display='none'">취소  <i class="fa fa-remove"></i></a>
@@ -157,7 +157,8 @@
 
         var sender   = $('#sender').val();
         var receiver = $('#receiver').val();
-        var message = $('#message').val();
+        var title    = $('#title').val();
+        var message  = $('#message').val();
 
         if(!message) {
             alert('메시지가 작성되지 않았습니다. 김덕주 사랑해라는 메시지로 대신 합니다.');
@@ -170,7 +171,7 @@
         $.ajax({
             url : '/board/message'
             , type : 'POST'
-            , data : {sender:sender, receiver:receiver, message:message}
+            , data : {sender:sender, receiver:receiver, message:message, title:title}
             , async : false
             , dataType : 'json'
             , success : function(data) {

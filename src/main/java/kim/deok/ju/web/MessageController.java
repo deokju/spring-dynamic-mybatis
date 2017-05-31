@@ -1,5 +1,7 @@
 package kim.deok.ju.web;
 
+import kim.deok.ju.dbrouting.DbContextHolder;
+import kim.deok.ju.dbrouting.DbType;
 import kim.deok.ju.domain.AuthVO;
 import kim.deok.ju.domain.MessageVO;
 import kim.deok.ju.service.MessageService;
@@ -19,7 +21,7 @@ public class MessageController {
     MessageService messageService;
 
     @PostMapping("message")
-    public ResponseEntity<String> register(String sender, String receiver, String message, HttpServletRequest request ) {
+    public ResponseEntity<String> register(String sender, String receiver, String title, String message, HttpServletRequest request ) {
 
         ResponseEntity<String> entity = null;
         try {
@@ -31,7 +33,17 @@ public class MessageController {
             messageVO.setMessage(message);
             messageVO.setReceiver(receiver);
             messageVO.setSender(sender);
+            messageVO.setTitle(title);
             messageVO.setSummary(message.substring(0,10));
+
+            switch (auth.getDbNum()) {
+                case 1:
+                    DbContextHolder.setDbType(DbType.MASTER);
+                    break;
+                case 2:
+                    DbContextHolder.setDbType(DbType.SLAVE);
+                    break;
+            }
 
             messageService.writeMessage(messageVO);
             entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
