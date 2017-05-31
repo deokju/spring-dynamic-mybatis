@@ -5,5 +5,5 @@ import kim.deok.ju.domain.MessageVO;
 
 public interface MessageDAO {
 
-  public void write(MessageVO messageVO) throws Exception;
+  public void write(MessageVO messageVO);
 }

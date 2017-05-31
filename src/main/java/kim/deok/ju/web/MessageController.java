@@ -1,15 +1,15 @@
 package kim.deok.ju.web;
 
+import kim.deok.ju.domain.AuthVO;
 import kim.deok.ju.domain.MessageVO;
 import kim.deok.ju.service.MessageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/board")
@@ -19,11 +19,21 @@ public class MessageController {
     MessageService messageService;
 
     @PostMapping("message")
-    public ResponseEntity<String> register(@RequestBody MessageVO vo) {
+    public ResponseEntity<String> register(String sender, String receiver, String message, HttpServletRequest request ) {
 
         ResponseEntity<String> entity = null;
         try {
-            messageService.writeMessage(vo);
+            HttpSession session = request.getSession();
+            AuthVO auth = null;
+            auth = (AuthVO)session.getAttribute("Auth");
+
+            MessageVO messageVO = new MessageVO();
+            messageVO.setMessage(message);
+            messageVO.setReceiver(receiver);
+            messageVO.setSender(sender);
+            messageVO.setSummary(message.substring(0,10));
+
+            messageService.writeMessage(messageVO);
             entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

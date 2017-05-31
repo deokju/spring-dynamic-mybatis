@@ -15,7 +15,7 @@ public class MessageDAOImpl implements MessageDAO {
 	private static String namespace ="MessageMapper";
 
 
-    public void write(MessageVO messageVO) throws Exception {
+    public void write(MessageVO messageVO){
         session.insert(namespace+".writeMessage", messageVO);
     }
 }

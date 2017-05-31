@@ -4,10 +4,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 
 <mapper namespace="AuthMapper">
 
-	<insert id="getUser">
-		INSERT INTO tb_message(sender, receiver, title, summary, message)
-		VALUES (#{sender}, #{receiver}, #{title}, #{summary}, #{message})
-	</insert>
+	<select id="getUserById" parameterType="string" resultType="AuthVO">
+		SELECT
+		 id, password, userName, profile, dbNum
+		FROM
+		  TB_MEMBER
+		WHERE
+		  id = #{id}
+	</select>
+
+
+	<select id="getMembers"  resultType="AuthVO">
+		SELECT
+		  id, password, userName, profile, dbNum
+		FROM
+		  TB_MEMBER
+	</select>
 </mapper>
 
 

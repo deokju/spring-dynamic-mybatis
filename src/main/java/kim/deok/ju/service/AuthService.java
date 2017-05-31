@@ -5,6 +5,7 @@ import kim.deok.ju.persistence.AuthDAO;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Service
 public class AuthService {
@@ -16,7 +17,7 @@ public class AuthService {
 
     public boolean isUserCheck(String userId, String password) {
 
-        AuthVO authVO = authDAO.getUser(userId);
+        AuthVO authVO = authDAO.getUserById(userId);
 
         if(authVO == null) {
             return false;
@@ -29,8 +30,12 @@ public class AuthService {
     }
 
     public AuthVO getAuth(String userName) {
-        AuthVO user = inMemoryUsers.get(userName);
+        AuthVO user = authDAO.getUserById(userName);
         System.out.println(user.toString());
         return user;
+    }
+
+    public List<AuthVO> getMembers() {
+        return authDAO.getMembers();
     }
 }

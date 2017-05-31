@@ -30,7 +30,7 @@
 
     <bean id="dataSource3" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-        <property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/user"></property>
+        <property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/userdb"></property>
         <property name="username" value="root"></property>
         <property name="password" value="1111"></property>
     </bean>
@@ -38,12 +38,12 @@
     <bean id="dataSource" class="kim.deok.ju.dbrouting.RoutingDataSource">
         <property name="targetDataSources">
             <map key-type="kim.deok.ju.dbrouting.DbType">
-                <entry key="MASTER"  value-ref="dataSource1"/>
-                <entry key="SLAVE"   value-ref="dataSource2"/>
-                <entry key="USER"    value-ref="dataSource3"/>
+                <entry key="MASTER"     value-ref="dataSource1"/>
+                <entry key="SLAVE"      value-ref="dataSource2"/>
+                <entry key="USERDB"     value-ref="dataSource3"/>
             </map>
         </property>
-        <property name="defaultTargetDataSource" ref="USER"/>
+        <property name="defaultTargetDataSource" ref="dataSource3"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -62,6 +62,7 @@
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
     </bean>
 
+    <context:component-scan base-package="kim.deok.ju.persistence"/>
     <context:component-scan base-package="kim.deok.ju.service"/>
 
 </beans>

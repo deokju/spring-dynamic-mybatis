@@ -53,13 +53,8 @@
             <label>받는사람</label>
             <select id="receiver" name="receiver" class="w3-input w3-border w3-margin-bottom">
             <c:forEach var="member" items="${members}">
-                <option value="${member.id}">${member.name}</option>
+                <option value="${member.id}">${member.userName}</option>
             </c:forEach>
-            </select>
-            <label>저장 DB서버</label>
-            <select id="dbNum" name="dbNum" class="w3-input w3-border w3-margin-bottom">
-                <option value="1" selected>1번서버</option>
-                <option value="2">2번서버</option>
             </select>
             <label>제목</label>
             <input class="w3-input w3-border w3-margin-bottom" type="text">
@@ -162,7 +157,6 @@
 
         var sender   = $('#sender').val();
         var receiver = $('#receiver').val();
-        var dbNum    = $('#dbNum').val();
         var message = $('#message').val();
 
         if(!message) {
@@ -176,7 +170,7 @@
         $.ajax({
             url : '/board/message'
             , type : 'POST'
-            , data : {sender:sender, receiver:receiver, message:message, dbNum:dbNum}
+            , data : {sender:sender, receiver:receiver, message:message}
             , async : false
             , dataType : 'json'
             , success : function(data) {

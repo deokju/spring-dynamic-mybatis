@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Repository
 public class AuthDAOImpl implements AuthDAO {
@@ -14,8 +15,12 @@ public class AuthDAOImpl implements AuthDAO {
 	
 	private static String namespace ="AuthMapper";
 
-    public AuthVO getUser(String id) {
-        return session.selectOne(namespace+".getUser", id);
+    public AuthVO getUserById(String id) {
+        return session.selectOne(namespace+".getUserById", id);
+    }
+
+    public List<AuthVO> getMembers() {
+        return session.selectList(namespace+".getMembers");
     }
 }
 
