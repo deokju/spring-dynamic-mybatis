@@ -22,6 +22,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
             }
         }catch(Exception e) {
             response.sendRedirect("/login");
+            return false;
         }
         return true;
     }

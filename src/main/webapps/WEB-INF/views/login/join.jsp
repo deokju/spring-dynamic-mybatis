@@ -76,12 +76,12 @@
 
 <body>
 <div class="login">
-	<h1>Login</h1>
-	<form method="post" id="loginForm" name="loginForm" action="/login">
-		<input type="text" 		id="userName"   name="userName"     placeholder="kimjunghyun" 	required="required" />
-		<input type="password" 	id="userPass"   name="userPass"    placeholder="1111" 		required="required" />
-		<button type="submit" class="btn btn-primary btn-block btn-large">로그인</button>
-		<button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='/join'">회원가입</button>
+	<h1>회원가입 중복방지 기능 없습니다.</h1>
+	<form method="post" id="joinForm" name="joinForm" action="/join">
+        <input type="text" 		id="id"         name="id"           placeholder="ssh" 	        required="required" />
+        <input type="password" 	id="password"   name="password"     placeholder="1111" 	        required="required" />
+		<input type="text" 	    id="userName"   name="userName"    placeholder="원승덕" 			required="required" />
+		<button type="submit" class="btn btn-primary btn-block btn-large">회원가입</button>
 	</form>
 </div>
 

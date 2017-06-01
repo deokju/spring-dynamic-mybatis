@@ -20,6 +20,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		FROM
 		  TB_MEMBER
 	</select>
+
+	<select id="getInsertDbNum"  resultType="hashMap">
+        SELECT
+         count(dbNum) as cnt, dbNum
+        FROM
+        TB_MEMBER
+        group by dbNum
+        order by dbNum asc
+        limit 1
+	</select>
+
+    <insert id="insertMember" parameterType="AuthVO">
+        INSERT INTO TB_MEMBER
+        ( id, password, userName, profile, dbNum)
+        VALUES
+        (#{id}, #{password}, #{userName}, #{profile}, #{dbNum})
+    </insert>
 </mapper>
 
 
