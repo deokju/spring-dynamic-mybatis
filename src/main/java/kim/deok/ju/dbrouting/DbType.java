@@ -1,7 +1,22 @@
 package kim.deok.ju.dbrouting;
 
 public enum DbType {
-   MASTER,
-   SLAVE,
-   USERDB,
+   MASTER(1),
+   SLAVE(2),
+   USERDB(3);
+
+   final private int dbNum;
+
+   DbType(int dbNum) {
+      this.dbNum = dbNum;
+   }
+
+   public static DbType getDbType(int dbNum){
+      for(DbType dbType : DbType.values()) {
+         if(dbType.dbNum == dbNum) {
+            return dbType;
+         }
+      }
+      return null;
+   }
 }
