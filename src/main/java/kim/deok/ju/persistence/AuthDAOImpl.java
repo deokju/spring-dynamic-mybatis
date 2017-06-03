@@ -31,6 +31,9 @@ public class AuthDAOImpl implements AuthDAO {
     public void insertMember(AuthVO newMember) {
         session.insert(namespace+".insertMember", newMember);
     }
+    public void insertMember2(AuthVO newMember) {
+        session.update(namespace+".insertMember2", newMember);
+    }
 }
 
 

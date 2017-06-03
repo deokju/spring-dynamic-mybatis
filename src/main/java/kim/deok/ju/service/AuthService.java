@@ -40,10 +40,16 @@ public class AuthService {
         return authDAO.getMembers();
     }
 
+/*
     public void insertMember(AuthVO newMember) {
         HashMap<String,Integer> dbNum = authDAO.getInsertDbNum();
         newMember.setDbNum(dbNum.get("dbNum"));
 
         authDAO.insertMember(newMember);
+    }
+*/
+
+    public void insertMember(AuthVO newMember) {
+        authDAO.insertMember2(newMember);
     }
 }

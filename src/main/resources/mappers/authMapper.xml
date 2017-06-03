@@ -22,13 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 
 	<select id="getInsertDbNum"  resultType="hashMap">
-        SELECT
-         count(dbNum) as cnt, dbNum
-        FROM
-        TB_MEMBER
-        group by dbNum
-        order by dbNum asc
-        limit 1
+	SELECT
+		count(dbNum) as cnt, dbNum
+		FROM
+		TB_MEMBER
+		group by dbNum
+		order by dbNum asc
+	limit 1
 	</select>
 
     <insert id="insertMember" parameterType="AuthVO">
@@ -37,6 +37,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
         VALUES
         (#{id}, #{password}, #{userName}, #{profile}, #{dbNum})
     </insert>
+
+	<update id="insertMember2" statementType="CALLABLE" parameterType="AuthVO">
+        {  call INSERT_MEMBER(
+                #{id},
+                #{password},
+                #{userName},
+                #{profile}
+            )
+        }
+	</update>
 </mapper>
 
 

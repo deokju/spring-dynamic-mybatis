@@ -10,4 +10,5 @@ public interface AuthDAO {
     public List<AuthVO> getMembers();
     public HashMap<String,Integer> getInsertDbNum();
     public void insertMember(AuthVO newMember);
+    public void insertMember2(AuthVO newMember);
 }
